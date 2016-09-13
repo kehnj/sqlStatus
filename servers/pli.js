@@ -37,8 +37,6 @@ module.exports = {
 
 
         result = recordset[0].LastDate.toString();
-        console.log('pli.js line 48: ' + result );
-
         io.emit('chat message', result);
 
       });
