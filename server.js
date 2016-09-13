@@ -6,48 +6,53 @@ const Good = require('good');
 const server = new Hapi.Server();
 server.connection({
   host: 'localhost',
-  port: Number(process.env.PORT || 8000)
+  port: Number(process.env.PORT || 3000)
 });
 
 
-server.route({
-    method: 'GET',
-    path: '/',
-     handler: function (request, reply) {
-       reply('Testing page refresh: '+ new Date().toString());
-     }
+var io = require('socket.io')(server.listener);
+
+io.on('connection', function(socket){
+
+  console.log('Connected!');
+
+  // capture socket.emit from client side
+  socket.on('chat message', function(msg){
+
+    // send msg back to client side with io.emit
+    io.emit('chat message', msg);
+  });
+
+
+  // send info to client side with io.emit in loop
+  setInterval(function () {
+
+    require('./servers/pli').checkPLI(io);
+
+  }, 15000);
+
 });
 
-require('./sqlStatus').startRunning();
-
-
-server.register({
-    register: Good,
-    options: {
-        reporters: {
-            console: [{
-                module: 'good-squeeze',
-                name: 'Squeeze',
-                args: [{
-                    response: '*',
-                    log: '*'
-                }]
-            }, {
-                module: 'good-console'
-            }, 'stdout']
-        }
-    }
-}, (err) => {
+server.register(require('inert'), (err) => {
 
     if (err) {
-        throw err; // something bad happened loading the plugin
+        throw err;
     }
+
+    server.route({
+        method: 'GET',
+        path: '/',
+        handler: function (request, reply) {
+            reply.file('index.html');
+        }
+    });
 
     server.start((err) => {
 
         if (err) {
             throw err;
         }
-        server.log('info', 'Server running at: ' + server.info.uri);
+
+        console.log('Server running at:', server.info.uri);
     });
 });
