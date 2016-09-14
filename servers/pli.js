@@ -1,6 +1,6 @@
 
 const Moment = require('moment');
-const SendMsg = require('../utilities/sendmsg');
+//const SendMsg = require('../utilities/sendmsg');
 
 //todo... you can delete this function and update the timer to point to the real one.
 function checkSQL(io){
