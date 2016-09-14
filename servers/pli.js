@@ -1,9 +1,9 @@
 
 const Moment = require('moment');
-//const SendMsg = require('../utilities/sendmsg');
+const SendMsg = require('../utilities/sendmsg');
 
 //todo... you can delete this function and update the timer to point to the real one.
-function checkSQL(io){
+function checkSQL_test(io){
   var status = Moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
 
   var someObj = {
@@ -15,7 +15,7 @@ function checkSQL(io){
   io.emit('sqlStatus', someObj);
 };
 
-function checkSQL2(io){
+function checkSQL(io){
   var result = '';
 
   var sqlPLI = require("mssql");
