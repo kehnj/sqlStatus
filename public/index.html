@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+  </head>
+
+  <body id="body">
+
+    <div>
+      <ul id="messages"></ul>
+    </div>
+
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+    <script>
+      var socket = io();
+
+      socket.on('sqlStatus', function(msg){
+          $('#messages').append($('<li>').text(msg));
+      });
+
+    </script>
+
+  </body>
+</html>
