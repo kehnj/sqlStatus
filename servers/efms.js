@@ -1,3 +1,5 @@
+const SendMsg = require('../sendmsg');
+
 module.exports = {
 
   checkEFMS: function (io) {
@@ -18,7 +20,7 @@ module.exports = {
       if (err) {
         console.log(err);
         result = 'Error connecting to EFMS2 database';
-        require('../sendmsg').sendText(result);
+        .sendText(result);
       }
 
       // create Request object
@@ -30,7 +32,7 @@ module.exports = {
         if (err) {
           console.log(err)
           result = 'Error returning data from EFMS2 database';
-          require('../sendmsg').sendText(result);
+          SendMsg.sendText(result);
         }
 
         result = recordset[0].LastDate.toString();

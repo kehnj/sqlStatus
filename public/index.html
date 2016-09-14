@@ -17,7 +17,8 @@
       var socket = io();
 
       socket.on('sqlStatus', function(msg){
-          $('#messages').append($('<li>').text(msg));
+          console.log(JSON.stringify(msg));
+          $('#messages').append($('<li>').text(msg.time));
       });
 
     </script>

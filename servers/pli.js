@@ -1,12 +1,19 @@
 
 const Moment = require('moment');
+const SendMsg = require('../utilities/sendmsg');
 
+//todo... you can delete this function and update the timer to point to the real one.
 function checkSQL(io){
   var status = Moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
 
-  console.log(status);
-  io.emit('sqlStatus', status);
-}
+  var someObj = {
+    time: status,
+    somethingElse: 'booya'
+  };
+
+  console.log(JSON.stringify(someObj));
+  io.emit('sqlStatus', someObj);
+};
 
 function checkSQL2(io){
   var result = '';
@@ -23,7 +30,9 @@ function checkSQL2(io){
     if (err) {
       console.log(err);
       result = 'Error connecting to PLIAPPS database';
-      require('../sendmsg').sendText(result);
+
+      //todo.. why not put more of the err message in the txt message?
+      SendMsg.sendText(result);
     }
 
     // create Request object
@@ -35,7 +44,8 @@ function checkSQL2(io){
       if (err) {
         console.log(err);
         result = 'Error returning data from PLIAPPS database';
-        require('../sendmsg').sendText(result);
+        SendMsg.sendText(result);
+        //todo.. shouldn't you io.emit here back to the server as well
       }
 
       result = recordset[0].LastDate.toString();
@@ -43,7 +53,6 @@ function checkSQL2(io){
 
     });
   });
-
 };
 
 exports.checkSQL = function (io) {
