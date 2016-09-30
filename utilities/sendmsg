@@ -1,0 +1,18 @@
+// Twilio Credentials
+ const accountSid = process.env.TWILIO_SID;
+ const authToken = process.env.TWILIO_TOKEN;
+
+ //require the Twilio module and create a REST client
+ const client = require('twilio')(accountSid, authToken);
+
+module.exports = {
+  sendText: function (sServer){
+      client.messages.create({
+        to: process.env.textTo,
+        from: process.env.textFrom,
+        body: 'SQL FAILED: ' + sServer + '!',
+      }, function (err, message) {
+        console.log(message.sid);
+      });
+  }
+};
