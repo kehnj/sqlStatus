@@ -27,7 +27,7 @@ function checkSQL(io){
     var reqPLI = new sqlPLI.Request(con);
 
     // query to the database and get the records
-    reqPLI.query('SELECT LastDate3 FROM tblLastDate', function (err, recordset) {
+    reqPLI.query('SELECT LastDate FROM tblLastDate', function (err, recordset) {
 
       if (err) {
         console.log(err);
